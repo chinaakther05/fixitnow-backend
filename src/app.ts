@@ -7,6 +7,7 @@ import globalErrorHandler from "./middlewares/globalErrorHandler";
 import { categoryRoutes } from "./modules/category/category.route";
 import { technicianRoutes } from "./modules/technician/technician.route";
 import { bookingRoutes } from "./modules/booking/booking.route";
+import { serviceRoutes } from "./modules/service/service.route";
 
 
 
@@ -32,6 +33,7 @@ app.use("/api/users", userRoutes)
 app.use("/api", categoryRoutes);
 app.use("/api", technicianRoutes);
 app.use("/api", bookingRoutes);
+app.use("/api", serviceRoutes);
 
 
 
