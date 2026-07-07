@@ -2,9 +2,9 @@ import { ErrorRequestHandler, Request, Response } from "express";
 import httpStatus from "http-status";
 import AppError from "../errors/AppError";
 
-const globalErrorHandler: ErrorRequestHandler = (error, req : Request, res : Response, next : any) => {
-  let statusCode = httpStatus.INTERNAL_SERVER_ERROR;
-  let message = "Something went wrong";
+const globalErrorHandler: ErrorRequestHandler = (error, req: Request, res: Response, next: any) => {
+  let statusCode: number = httpStatus.INTERNAL_SERVER_ERROR;  
+  let message: string = "Something went wrong";
 
   if (error instanceof AppError) {
     statusCode = error.statusCode;
@@ -13,7 +13,7 @@ const globalErrorHandler: ErrorRequestHandler = (error, req : Request, res : Res
     message = error.message;
   }
 
-  console.log(error); // debugging এর জন্য console এও দেখাবে
+  console.log(error);
 
   res.status(statusCode).json({
     success: false,
