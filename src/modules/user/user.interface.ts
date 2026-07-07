@@ -15,3 +15,9 @@ export interface RegisterUserPayload {
   skills?: string[];
   hourlyRate?: number;
 }
+
+
+export interface LoginUserPayload {
+  email: string;
+  password: string;
+}

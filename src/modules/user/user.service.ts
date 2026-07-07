@@ -4,7 +4,8 @@ import httpStatus from "http-status";
 import config from "../../config";
 import AppError from "../../errors/AppError";
 import { Role } from "../../../generated/prisma/enums";
-import { RegisterUserPayload } from "./user.interface";
+import { LoginUserPayload, RegisterUserPayload } from "./user.interface";
+import { jwtUtils } from "../../utils/jwt";
 
 const registerUserIntoDB = async (payload: RegisterUserPayload) => {
   const {
@@ -75,6 +76,48 @@ const registerUserIntoDB = async (payload: RegisterUserPayload) => {
   return user;
 };
 
+
+const loginUserFromDB = async (payload: LoginUserPayload) => {
+  const { email, password } = payload;
+
+  const user = await prisma.user.findUnique({ where: { email } });
+
+  if (!user) {
+    throw new AppError(httpStatus.UNAUTHORIZED, "Invalid email or password");
+  }
+
+  if (user.status !== "ACTIVE") {
+    throw new AppError(httpStatus.FORBIDDEN, "Your account is not active");
+  }
+
+  const isPasswordMatch = await bcrypt.compare(password, user.password);
+
+  if (!isPasswordMatch) {
+    throw new AppError(httpStatus.UNAUTHORIZED, "Invalid email or password");
+  }
+
+  const jwtPayload = {
+    userId: user.id,
+    role: user.role,
+  };
+
+ const accessToken = jwtUtils.createToken(
+  jwtPayload,
+  config.jwt_access_secret,
+  config.jwt_access_expires_in as any   // <-- সরাসরি string, object না
+);
+
+  const { password: _, ...userWithoutPassword } = user;
+
+  return {
+    accessToken,
+    user: userWithoutPassword,
+  };
+};
+
+
+
 export const userService = {
   registerUserIntoDB,
+  loginUserFromDB,
 };
