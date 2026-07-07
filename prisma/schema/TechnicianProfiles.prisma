@@ -13,5 +13,5 @@ model TechnicianProfile {
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@map("technician_profiles")
+  @@map("technicianprofiles")
 }
