@@ -1,0 +1,23 @@
+model Booking {
+  id            String        @id @default(uuid())
+  customerId    String
+  technicianId  String
+  categoryId    String?
+  serviceId     String?
+  status        BookingStatus @default(REQUESTED)
+  scheduledDate DateTime
+  address       String?
+  notes         String?
+  totalAmount   Float
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  customer   User      @relation("CustomerBookings", fields: [customerId], references: [id])
+  technician User      @relation("TechnicianBookings", fields: [technicianId], references: [id])
+  category   Category? @relation(fields: [categoryId], references: [id])
+  service    Service?  @relation(fields: [serviceId], references: [id])
+  payment    Payment?
+  review     Review?
+
+  @@map("bookings")
+}
