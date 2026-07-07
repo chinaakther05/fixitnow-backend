@@ -6,6 +6,7 @@ import { userRoutes } from "./modules/user/user.route";
 import globalErrorHandler from "./middlewares/globalErrorHandler";
 import { categoryRoutes } from "./modules/category/category.route";
 import { technicianRoutes } from "./modules/technician/technician.route";
+import { bookingRoutes } from "./modules/booking/booking.route";
 
 
 
@@ -30,6 +31,7 @@ app.get("/", (req : Request, res : Response) => {
 app.use("/api/users", userRoutes)
 app.use("/api", categoryRoutes);
 app.use("/api", technicianRoutes);
+app.use("/api", bookingRoutes);
 
 
 
