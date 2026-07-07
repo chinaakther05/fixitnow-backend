@@ -104,7 +104,7 @@ const loginUserFromDB = async (payload: LoginUserPayload) => {
  const accessToken = jwtUtils.createToken(
   jwtPayload,
   config.jwt_access_secret,
-  config.jwt_access_expires_in as any   // <-- সরাসরি string, object না
+  config.jwt_access_expires_in as any   
 );
 
   const { password: _, ...userWithoutPassword } = user;
@@ -116,8 +116,24 @@ const loginUserFromDB = async (payload: LoginUserPayload) => {
 };
 
 
+const getMeFromDB = async (userId: string) => {
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    omit: { password: true },
+    include: { technicianProfile: true },
+  });
+
+  if (!user) {
+    throw new AppError(httpStatus.NOT_FOUND, "User not found");
+  }
+
+  return user;
+};
+
+
 
 export const userService = {
   registerUserIntoDB,
   loginUserFromDB,
+  getMeFromDB,
 };
