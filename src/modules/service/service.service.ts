@@ -54,7 +54,49 @@ const getAllServicesFromDB = async (filters: { categoryId?: string; minPrice?: s
   return services;
 };
 
+const getAllTechniciansFromDB = async (filters: { skill?: string; minRating?: string }) => {
+  const { skill, minRating } = filters;
+
+  const technicians = await prisma.technicianProfile.findMany({
+    where: {
+      ...(skill && { skills: { has: skill } }),
+      ...(minRating && { avgRating: { gte: Number(minRating) } }),
+    },
+    include: {
+      user: { select: { id: true, name: true, email: true, phone: true } },
+      services: { include: { category: true } },
+    },
+    orderBy: { avgRating: "desc" },
+  });
+
+  return technicians;
+};
+
+const getTechnicianByIdFromDB = async (technicianProfileId: string) => {
+  const technician = await prisma.technicianProfile.findUnique({
+    where: { id: technicianProfileId },
+    include: {
+      user: { select: { id: true, name: true, email: true, phone: true } },
+      services: { include: { category: true } },
+    },
+  });
+
+  if (!technician) {
+    throw new AppError(httpStatus.NOT_FOUND, "Technician not found");
+  }
+
+  const reviews = await prisma.review.findMany({
+    where: { technicianId: technician.userId },
+    include: { customer: { select: { id: true, name: true } } },
+    orderBy: { createdAt: "desc" },
+  });
+
+  return { ...technician, reviews };
+};
+
 export const serviceService = {
   createServiceIntoDB,
   getAllServicesFromDB,
+  getTechnicianByIdFromDB ,
+  getAllTechniciansFromDB 
 };
