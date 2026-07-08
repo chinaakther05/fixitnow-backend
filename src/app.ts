@@ -26,10 +26,13 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser())
 
-app.get("/", (req : Request, res : Response) => {
-    res.send("Hello World!");
-})
-
+app.get("/", (req: Request, res: Response) => {
+  res.status(200).json({
+    success: true,
+    message: "Welcome to FixItNow API ",
+    description: "Your Trusted Home Service Platform Backend is running successfully.",
+  });
+});
 //app.post();
 
 app.use("/api/users", userRoutes)
