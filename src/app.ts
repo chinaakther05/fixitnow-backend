@@ -9,6 +9,7 @@ import { technicianRoutes } from "./modules/technician/technician.route";
 import { bookingRoutes } from "./modules/booking/booking.route";
 import { serviceRoutes } from "./modules/service/service.route";
 import { paymentRoutes } from "./modules/payment/payment.route";
+import { reviewRoutes } from "./modules/review/review.route";
 
 
 
@@ -36,6 +37,7 @@ app.use("/api", technicianRoutes);
 app.use("/api", bookingRoutes);
 app.use("/api", serviceRoutes);
 app.use("/api", paymentRoutes)
+app.use("/api", reviewRoutes);
 
 
 
