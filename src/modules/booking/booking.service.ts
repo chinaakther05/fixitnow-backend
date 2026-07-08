@@ -97,7 +97,7 @@ const updateBookingStatusIntoDB = async (
     throw new AppError(httpStatus.FORBIDDEN, "You cannot update this booking");
   }
 
-  // Status transition validation (basic)
+  
   const validTransitions: Record<string, string[]> = {
     REQUESTED: ["ACCEPTED", "DECLINED"],
     PAID: ["IN_PROGRESS"],

@@ -1,4 +1,3 @@
-// path adjust করো
 
 import { Role } from "../../../generated/prisma/enums";
 

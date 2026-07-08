@@ -5,7 +5,7 @@ export const catchAsync = (fn: RequestHandler) => {
     try {
       await fn(req, res, next);
     } catch (error) {
-      next(error); // নিজে response না পাঠিয়ে, error টা globalErrorHandler এ পাস করে দিবে
+      next(error); 
     }
   };
 };

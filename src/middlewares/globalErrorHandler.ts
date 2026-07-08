@@ -8,7 +8,7 @@ const globalErrorHandler: ErrorRequestHandler = (error, req: Request, res: Respo
   let message: string = "Something went wrong";
   let errorDetails: any = error instanceof Error ? error.message : error;
 
-  // Zod Validation Error হলে আলাদাভাবে handle করো
+  // Zod Validation Error 
   if (error instanceof ZodError) {
     statusCode = httpStatus.BAD_REQUEST;
     message = "Validation error";

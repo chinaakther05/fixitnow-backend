@@ -22,25 +22,25 @@ const registerUserIntoDB = async (payload: RegisterUserPayload) => {
     hourlyRate,
   } = payload;
 
-  // ০. Admin role ব্লক করো — নিরাপত্তার জন্য
+  //  Admin role 
   if (role === "ADMIN") {
     throw new AppError(httpStatus.FORBIDDEN, "You cannot register as an admin");
   }
 
-  // ১. Duplicate email check
+  //  Duplicate email check
   const isUserExist = await prisma.user.findUnique({ where: { email } });
 
   if (isUserExist) {
     throw new AppError(httpStatus.CONFLICT, "User with this email already exists");
   }
 
-  // ২. Password hash
+  //  Password hash
   const hashedPassword = await bcrypt.hash(
     password,
     Number(config.bcrypt_salt_rounds)
   );
 
-  // ৩. User তৈরি
+  //  User 
   const createdUser = await prisma.user.create({
     data: {
       name,
@@ -53,7 +53,7 @@ const registerUserIntoDB = async (payload: RegisterUserPayload) => {
     },
   });
 
-  // ৪. Technician হলে profile তৈরি
+  //  Technician 
   if (role === "TECHNICIAN") {
     await prisma.technicianProfile.create({
       data: {
@@ -66,7 +66,7 @@ const registerUserIntoDB = async (payload: RegisterUserPayload) => {
     });
   }
 
-  // ৫. Password ছাড়া user ফেরত পাঠানো
+ 
   const user = await prisma.user.findUnique({
     where: { id: createdUser.id },
     omit: { password: true },

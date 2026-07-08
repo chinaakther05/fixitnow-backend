@@ -6,13 +6,13 @@ import config from "../config";
 
 export const authMiddleware = (...allowedRoles: string[]) => {
   return async (req: Request, res: Response, next: NextFunction) => {
-    const authHeader = req.headers.authorization; // "Bearer <token>"
+    const authHeader = req.headers.authorization; 
 
     if (!authHeader) {
       throw new AppError(httpStatus.UNAUTHORIZED, "You are not authorized");
     }
 
-    const token = authHeader.split(" ")[1]; // "Bearer" বাদ দিয়ে token নেওয়া
+    const token = authHeader.split(" ")[1]; 
 
     if (!token) {
       throw new AppError(httpStatus.UNAUTHORIZED, "You are not authorized");
@@ -30,7 +30,7 @@ export const authMiddleware = (...allowedRoles: string[]) => {
       throw new AppError(httpStatus.FORBIDDEN, "You do not have permission to access this resource");
     }
 
-    // req এ user info বসিয়ে দাও, পরের controller এ ব্যবহার হবে
+    
     (req as any).user = decoded;
 
     next();
