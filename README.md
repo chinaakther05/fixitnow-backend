@@ -87,10 +87,9 @@ Customers may cancel a booking at any point before it reaches `IN_PROGRESS`.
 
 | Resource | Link |
 |----------|------|
-| **Live API** | `[PENDING — will be added after deployment]` |
-| **API Documentation (Postman)** | `[PENDING — will be added after export]` |
-| **Demo Video** | `[PENDING — will be added]` |
-
+| **Live API** | [https://fixitnow-backend-1.onrender.com/](https://fixitnow-backend-1.onrender.com/) |
+| **API Documentation (Postman)** | [View on Google Drive](https://drive.google.com/file/d/1EEwc_jKYpDB8QBiQG9mes1VVesI2aVVO/view?usp=sharing) |
+| **Demo Video** | [Watch on Loom](https://www.loom.com/share/afdfa05076f342ad80ef0f1cd53216f5) |
 ---
 
 ## 🔑 Admin Credentials
